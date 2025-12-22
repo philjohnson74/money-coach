@@ -18,6 +18,5 @@ jobs:
         # To find the SHA: Go to the repo, click on commits, copy the full SHA of the latest commit
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
