@@ -14,9 +14,7 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
-        # TODO: Replace with full commit SHA from https://github.com/SonarSource/sonarcloud-github-action
-        # To find the SHA: Go to the repo, click on commits, copy the full SHA of the latest commit
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
