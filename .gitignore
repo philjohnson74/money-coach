@@ -143,5 +143,8 @@ vite.config.ts.timestamp-*
 dist/
 web-build/
 
+# Coverage
+coverage/
+
 # macOS
 .DS_Store
