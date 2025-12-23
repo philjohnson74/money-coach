@@ -138,5 +138,13 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# Expo
+.expo/
+dist/
+web-build/
+
+# Coverage
+coverage/
+
 # macOS
 .DS_Store
