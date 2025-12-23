@@ -4,9 +4,9 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
+      <StatusBar style="dark" />
       <Text style={styles.title}>Money Coach</Text>
       <Text style={styles.subtitle}>Welcome to your personal finance app</Text>
-      <StatusBar style="auto" />
     </View>
   );
 }
