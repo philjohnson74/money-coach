@@ -4,6 +4,7 @@
     "slug": "money-coach",
     "version": "1.0.0",
     "orientation": "portrait",
+    "backgroundColor": "#f5f5f5",
     "userInterfaceStyle": "light",
     "splash": {
       "backgroundColor": "#ffffff",
@@ -20,7 +21,11 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "package": "com.moneycoach.app"
+      "package": "com.moneycoach.app",
+      "statusBar": {
+        "barStyle": "light-content",
+        "backgroundColor": "#000000"
+      }
     }
   }
 }

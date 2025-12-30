@@ -16,7 +16,7 @@ function FinancialProductsScreen(): React.ReactElement {
                 renderItem={({ item }) => (
                     <FinancialProductGridTile name={item.name} />
                 )}
-                numColumns={1}
+                numColumns={2}
             />
         </View>
     );
@@ -25,7 +25,6 @@ function FinancialProductsScreen(): React.ReactElement {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
         padding: 16,
     },
 });

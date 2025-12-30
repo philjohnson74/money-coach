@@ -132,6 +132,7 @@ money-coach/
 - **Expo** - React Native framework
 - **React Native** - Mobile app framework
 - **TypeScript** - Type safety
+- **React Navigation** - Third-party navigation library for React Native
 - **Jest** - Testing framework
 - **React Native Testing Library** - Testing utilities for React Native
 
