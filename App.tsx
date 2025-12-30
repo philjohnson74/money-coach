@@ -1,33 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import FinancialProductsScreen from './screens/FinancialProductsScreen';
 
-export default function App() {
+export default function App(): React.ReactElement {
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" />
-      <Text style={styles.title}>Money Coach</Text>
-      <Text style={styles.subtitle}>Welcome to your personal finance app</Text>
-    </View>
+    <FinancialProductsScreen />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
-    textAlign: 'center',
-  },
-});
 
