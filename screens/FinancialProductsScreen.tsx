@@ -12,8 +12,8 @@ function FinancialProductsScreen(): React.ReactElement {
         <View style={styles.container}>
             <FlatList<FinancialProduct>
                 data={FINANCIAL_PRODUCTS}
-                keyExtractor={(item: FinancialProduct) => item.id}
-                renderItem={({ item }: { item: FinancialProduct }) => (
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
                     <FinancialProductGridTile name={item.name} />
                 )}
                 numColumns={1}

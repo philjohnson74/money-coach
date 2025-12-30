@@ -10,6 +10,6 @@ export interface FinancialProduct {
  * Props for FinancialProductGridTile component
  */
 export interface FinancialProductGridTileProps {
-  name: string;
+  readonly name: string;
 }
 
