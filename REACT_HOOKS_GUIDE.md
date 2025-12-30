@@ -570,3 +570,4 @@ function Component() {
 
 Hooks are the modern way to write React components and are essential for building maintainable React Native apps!
 
+

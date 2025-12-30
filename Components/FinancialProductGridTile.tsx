@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Platform } from 'react-native';
 import { FinancialProductGridTileProps } from '../types/financialProduct';
 
 /**
@@ -8,8 +8,19 @@ import { FinancialProductGridTileProps } from '../types/financialProduct';
 function FinancialProductGridTile({ name }: Readonly<FinancialProductGridTileProps>): React.ReactElement {
     return (
         <View style={styles.gridItem}>
-            <Pressable style={styles.button}>
-                <Text style={styles.text}>{name}</Text>
+            <Pressable 
+                android_ripple={Platform.OS === 'android' ? { 
+                    color: '#CCCCCC',
+                    borderless: false,
+                } : undefined}
+                style={({ pressed }) => [
+                    styles.button,
+                    pressed && styles.buttonPressed
+                ]}
+            >
+                <View style={styles.content}>
+                    <Text style={styles.text}>{name}</Text>
+                </View>
             </Pressable>
         </View>
     );
@@ -27,15 +38,25 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 8,
+        overflow: Platform.OS === 'android' ? 'hidden' : 'visible', 
     },
     button: {
         flex: 1,
+        borderRadius: 8,
+    },
+    content: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonPressed: {
+        opacity: 0.5,
     },
     text: {
         fontSize: 18,
         fontWeight: 'bold',
         padding: 16,
-    },
+    },  
 });
 
 export default FinancialProductGridTile;

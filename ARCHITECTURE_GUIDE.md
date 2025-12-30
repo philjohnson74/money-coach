@@ -329,3 +329,4 @@ const TransactionsScreen = () => {
 
 For Money Coach, I'd recommend starting with **custom hooks + feature-based organization**, which gives you clean separation of concerns without the overhead of MVVM.
 
+
