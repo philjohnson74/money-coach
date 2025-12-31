@@ -1,4 +1,4 @@
-import { FinancialProduct as IFinancialProduct } from '../types/financialProduct';
+import { IFinancialProduct } from '../types/financialProduct';
 
 /**
  * FinancialProduct model class
@@ -6,10 +6,12 @@ import { FinancialProduct as IFinancialProduct } from '../types/financialProduct
 class FinancialProduct implements IFinancialProduct {
   id: string;
   name: string;
+  screenName: string;
 
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, screenName: string) {
     this.id = id;
     this.name = name;
+    this.screenName = screenName;
   }
 }
 

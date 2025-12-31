@@ -2,19 +2,25 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from "react-native";
 import { FINANCIAL_PRODUCTS } from "../data/financial-products-data";
 import FinancialProductGridTile from "../Components/FinancialProductGridTile";
-import { FinancialProduct } from "../types/financialProduct";
+import { IFinancialProduct } from "../types/financialProduct";
+import { NavigationProp } from '@react-navigation/native';
 
 /**
  * Screen component that displays a list of financial products
  */
-function FinancialProductsScreen(): React.ReactElement {
+function FinancialProductsScreen({navigation}: {navigation: NavigationProp<any>}): React.ReactElement {
+    function pressHandler(screenName: string): void {
+        console.log(`Pressed: ${screenName}`);
+        navigation.navigate(screenName);
+    }
+
     return (
         <View style={styles.container}>
-            <FlatList<FinancialProduct>
+            <FlatList<IFinancialProduct>
                 data={FINANCIAL_PRODUCTS}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <FinancialProductGridTile name={item.name} />
+                    <FinancialProductGridTile name={item.name} onPress={() => pressHandler(item.screenName)} />
                 )}
                 numColumns={2}
             />
