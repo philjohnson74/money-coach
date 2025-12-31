@@ -1,9 +1,10 @@
 /**
  * Type definition for FinancialProduct
  */
-export interface FinancialProduct {
+export interface IFinancialProduct {
   id: string;
   name: string;
+  screenName: string;
 }
 
 /**
@@ -11,5 +12,6 @@ export interface FinancialProduct {
  */
 export interface FinancialProductGridTileProps {
   readonly name: string;
+  readonly onPress: () => void;
 }
 

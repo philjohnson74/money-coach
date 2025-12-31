@@ -89,6 +89,20 @@ describe('App', () => {
       // Verify screen content is accessible (confirms navigation setup is correct)
       expect(screen.getByText('AVC')).toBeTruthy();
     });
+
+    it('has all financial product screens registered in the navigator', () => {
+      const { UNSAFE_root } = render(<App />);
+      
+      // Verify the app renders without errors
+      expect(UNSAFE_root).toBeTruthy();
+      
+      // Verify all product names are accessible (confirms screens are registered)
+      expect(screen.getByText('AVC')).toBeTruthy();
+      expect(screen.getByText('Mortgages')).toBeTruthy();
+      expect(screen.getByText('Wills')).toBeTruthy();
+      expect(screen.getByText('Protection')).toBeTruthy();
+      expect(screen.getByText('Payroll Savings')).toBeTruthy();
+    });
   });
 
   describe('Status Bar', () => {

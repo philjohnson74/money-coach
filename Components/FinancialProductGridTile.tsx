@@ -5,7 +5,7 @@ import { FinancialProductGridTileProps } from '../types/financialProduct';
 /**
  * Component that displays a single financial product in a grid tile
  */
-function FinancialProductGridTile({ name }: Readonly<FinancialProductGridTileProps>): React.ReactElement {
+function FinancialProductGridTile({ name, onPress }: Readonly<FinancialProductGridTileProps>): React.ReactElement {
     return (
         <View style={styles.gridItem}>
             <Pressable 
@@ -17,6 +17,7 @@ function FinancialProductGridTile({ name }: Readonly<FinancialProductGridTilePro
                     styles.button,
                     pressed && styles.buttonPressed
                 ]}
+                onPress={onPress}
             >
                 <View style={styles.content}>
                     <Text style={styles.text}>{name}</Text>
