@@ -8,7 +8,7 @@ import { NavigationProp } from '@react-navigation/native';
 /**
  * Screen component that displays a list of financial products
  */
-function FinancialProductsScreen({navigation}: {navigation: NavigationProp<any>}): React.ReactElement {
+function FinancialProductsScreen({navigation}: Readonly<{navigation: NavigationProp<any>}>): React.ReactElement {
     function pressHandler(screenName: string): void {
         console.log(`Pressed: ${screenName}`);
         navigation.navigate(screenName);

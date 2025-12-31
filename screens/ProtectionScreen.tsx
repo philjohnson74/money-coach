@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { View, Text, StyleSheet } from "react-native";
 
-function ProtectionScreen({navigation}: {navigation: NavigationProp<any>}): React.ReactElement {
+function ProtectionScreen({navigation}: Readonly<{navigation: NavigationProp<any>}>): React.ReactElement {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Protection</Text>
