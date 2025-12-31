@@ -2,10 +2,10 @@ import React from 'react';
 import { NavigationProp } from "@react-navigation/native";
 import { View, Text, StyleSheet } from "react-native";
 
-function MortgagesScreen({navigation}: {navigation: NavigationProp<any>}): React.ReactElement {
+function PayrollSavingsScreen({navigation}: {navigation: NavigationProp<any>}): React.ReactElement {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Mortgages</Text>
+            <Text style={styles.text}>Payroll Savings</Text>
         </View>
     );
 }
@@ -24,4 +24,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MortgagesScreen;
+export default PayrollSavingsScreen;
+
