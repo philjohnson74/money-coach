@@ -37,7 +37,7 @@ app/
 │   ├── TransactionsScreen/
 │   └── SettingsScreen/
 ├── navigation/         # Navigation configuration
-├── services/          # API calls, external services
+├── services/          # API calls, external services (using Axios)
 ├── hooks/             # Custom React hooks
 ├── store/             # State management (Redux, Zustand, etc.)
 └── utils/             # Helper functions
@@ -129,6 +129,7 @@ export const useTransactions = () => {
     const fetchTransactions = async () => {
       setIsLoading(true);
       try {
+        // apiService uses Axios for HTTP requests
         const data = await apiService.getTransactions();
         setTransactions(data);
       } catch (err) {
@@ -238,7 +239,7 @@ app/
 │   │   │   ├── useTransactions.ts
 │   │   │   └── useTransactionForm.ts
 │   │   ├── services/
-│   │   │   └── transactionService.ts
+│   │   │   └── transactionService.ts  # Uses Axios for API calls
 │   │   └── types.ts
 │   ├── accounts/
 │   │   └── ...
@@ -252,7 +253,7 @@ app/
 │   ├── hooks/
 │   │   └── useApi.ts
 │   ├── services/
-│   │   └── api.ts
+│   │   └── api.ts  # Axios-based API client
 │   └── utils/
 │       └── formatters.ts
 ├── navigation/
@@ -294,6 +295,35 @@ const TransactionsScreen = () => {
 - `react-observable` - RxJS integration
 - Custom hooks with RxJS
 
+## API Calls and HTTP Client
+
+This project uses **Axios** as the HTTP client for making API calls. Axios provides:
+
+- **Promise-based API** - Clean async/await syntax
+- **Request/Response interceptors** - For authentication, error handling
+- **Automatic JSON parsing** - No need to manually parse responses
+- **Request cancellation** - Cancel requests when components unmount
+- **TypeScript support** - Full type safety for requests and responses
+
+**Example usage:**
+```typescript
+// services/api.ts
+import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: 'https://api.example.com',
+  timeout: 10000,
+});
+
+// In services
+export const transactionService = {
+  getAll: async (): Promise<Transaction[]> => {
+    const response = await apiClient.get('/transactions');
+    return response.data;
+  },
+};
+```
+
 ## Best Practices Summary
 
 1. **Start Simple**: Use component-based architecture for small apps
@@ -304,8 +334,9 @@ const TransactionsScreen = () => {
    - Simple: Context API
    - Medium: Zustand
    - Complex: Redux Toolkit
-6. **Type Safety**: Use TypeScript throughout
-7. **Testing**: Test hooks and services, not just components
+6. **API Calls**: Use Axios for HTTP requests in service layer
+7. **Type Safety**: Use TypeScript throughout
+8. **Testing**: Test hooks and services, not just components
 
 ## Comparison Table
 

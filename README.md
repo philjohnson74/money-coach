@@ -133,6 +133,7 @@ money-coach/
 - **React Native** - Mobile app framework
 - **TypeScript** - Type safety
 - **React Navigation** - Third-party navigation library for React Native
+- **Axios** - Third-party HTTP client for making API calls
 - **Jest** - Testing framework
 - **React Native Testing Library** - Testing utilities for React Native
 
