@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, useMemo } from 'react';
 import { EnabledFeatures } from '../Services/http';
 
 interface EnabledFeaturesContextType {
@@ -10,10 +10,10 @@ interface EnabledFeaturesContextType {
 const EnabledFeaturesContext = createContext<EnabledFeaturesContextType | undefined>(undefined);
 
 interface EnabledFeaturesProviderProps {
-    children: ReactNode;
-    enabledFeatures: EnabledFeatures | null;
-    isLoading: boolean;
-    error: string | null;
+    readonly children: ReactNode;
+    readonly enabledFeatures: EnabledFeatures | null;
+    readonly isLoading: boolean;
+    readonly error: string | null;
 }
 
 export function EnabledFeaturesProvider({ 
@@ -22,8 +22,13 @@ export function EnabledFeaturesProvider({
     isLoading, 
     error 
 }: EnabledFeaturesProviderProps): React.ReactElement {
+    const contextValue = useMemo(
+        () => ({ enabledFeatures, isLoading, error }),
+        [enabledFeatures, isLoading, error]
+    );
+
     return (
-        <EnabledFeaturesContext.Provider value={{ enabledFeatures, isLoading, error }}>
+        <EnabledFeaturesContext.Provider value={contextValue}>
             {children}
         </EnabledFeaturesContext.Provider>
     );
