@@ -3,6 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 import { NavigationProp } from '@react-navigation/native';
 import FinancialProductsScreen from './FinancialProductsScreen';
 import { FINANCIAL_PRODUCTS } from '../data/financial-products-data';
+import { EnabledFeaturesProvider } from '../contexts/EnabledFeaturesContext';
+import { EnabledFeatures } from '../Services/http';
 
 describe('FinancialProductsScreen', () => {
   const mockNavigate = jest.fn();
@@ -10,32 +12,86 @@ describe('FinancialProductsScreen', () => {
     navigate: mockNavigate,
   } as unknown as NavigationProp<any>;
 
+  const renderWithProvider = (
+    enabledFeatures: EnabledFeatures | null = null,
+    isLoading: boolean = false,
+    error: string | null = null
+  ) => {
+    return render(
+      <EnabledFeaturesProvider
+        enabledFeatures={enabledFeatures}
+        isLoading={isLoading}
+        error={error}
+      >
+        <FinancialProductsScreen navigation={mockNavigation} />
+      </EnabledFeaturesProvider>
+    );
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   describe('Rendering', () => {
-    it('renders all financial products', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
-      
-      FINANCIAL_PRODUCTS.forEach((product) => {
-        expect(screen.getByText(product.name)).toBeTruthy();
-      });
+    it('renders only enabled financial products', () => {
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['Wills', 'Mortgages'],
+      };
+
+      renderWithProvider(enabledFeatures);
+
+      // Should show enabled products
+      expect(screen.getByText('Wills')).toBeTruthy();
+      expect(screen.getByText('Mortgages')).toBeTruthy();
+
+      // Should not show disabled products
+      expect(screen.queryByText('AVC')).toBeNull();
+      expect(screen.queryByText('Protection')).toBeNull();
+      expect(screen.queryByText('Payroll Savings')).toBeNull();
     });
 
-    it('renders the correct number of products', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
-      
-      const expectedCount = FINANCIAL_PRODUCTS.length;
-      FINANCIAL_PRODUCTS.forEach((product) => {
-        expect(screen.getByText(product.name)).toBeTruthy();
-      });
+    it('shows loading state when features are loading', () => {
+      renderWithProvider(null, true);
+
+      expect(screen.getByText('Loading products...')).toBeTruthy();
+      expect(screen.queryByText('Wills')).toBeNull();
+    });
+
+    it('shows empty state when no products are enabled', () => {
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: [],
+      };
+
+      renderWithProvider(enabledFeatures);
+
+      expect(screen.getByText('No products available')).toBeTruthy();
+    });
+
+    it('filters products correctly based on enabled features', () => {
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['AVC', 'Protection'],
+      };
+
+      renderWithProvider(enabledFeatures);
+
+      expect(screen.getByText('AVC')).toBeTruthy();
+      expect(screen.getByText('Protection')).toBeTruthy();
+      expect(screen.queryByText('Wills')).toBeNull();
+      expect(screen.queryByText('Mortgages')).toBeNull();
     });
   });
 
   describe('Navigation', () => {
     it('navigates to AVC screen when AVC tile is pressed', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['AVC'],
+      };
+
+      renderWithProvider(enabledFeatures);
       
       const avcTile = screen.getByText('AVC');
       const pressable = avcTile.parent?.parent;
@@ -47,7 +103,12 @@ describe('FinancialProductsScreen', () => {
     });
 
     it('navigates to Mortgages screen when Mortgages tile is pressed', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['Mortgages'],
+      };
+
+      renderWithProvider(enabledFeatures);
       
       const mortgagesTile = screen.getByText('Mortgages');
       const pressable = mortgagesTile.parent?.parent;
@@ -59,7 +120,12 @@ describe('FinancialProductsScreen', () => {
     });
 
     it('navigates to Wills screen when Wills tile is pressed', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['Wills'],
+      };
+
+      renderWithProvider(enabledFeatures);
       
       const willsTile = screen.getByText('Wills');
       const pressable = willsTile.parent?.parent;
@@ -71,7 +137,12 @@ describe('FinancialProductsScreen', () => {
     });
 
     it('navigates to Protection screen when Protection tile is pressed', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['Protection'],
+      };
+
+      renderWithProvider(enabledFeatures);
       
       const protectionTile = screen.getByText('Protection');
       const pressable = protectionTile.parent?.parent;
@@ -83,7 +154,12 @@ describe('FinancialProductsScreen', () => {
     });
 
     it('navigates to PayrollSavings screen when Payroll Savings tile is pressed', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['Payroll Savings'],
+      };
+
+      renderWithProvider(enabledFeatures);
       
       const payrollTile = screen.getByText('Payroll Savings');
       const pressable = payrollTile.parent?.parent;
@@ -94,10 +170,20 @@ describe('FinancialProductsScreen', () => {
       }
     });
 
-    it('calls pressHandler with correct screen name for each product', () => {
-      render(<FinancialProductsScreen navigation={mockNavigation} />);
+    it('calls pressHandler with correct screen name for enabled products only', () => {
+      const enabledFeatures: EnabledFeatures = {
+        partnerId: 'partner123',
+        enabledFeatureNames: ['Wills', 'Mortgages'],
+      };
+
+      renderWithProvider(enabledFeatures);
       
-      FINANCIAL_PRODUCTS.forEach((product) => {
+      // Only test enabled products
+      const enabledProducts = FINANCIAL_PRODUCTS.filter(p => 
+        enabledFeatures.enabledFeatureNames.includes(p.name)
+      );
+      
+      enabledProducts.forEach((product) => {
         const tile = screen.getByText(product.name);
         const pressable = tile.parent?.parent;
         
