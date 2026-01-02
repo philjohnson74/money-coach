@@ -2,14 +2,14 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FinancialProductsScreen from './screens/FinancialProductsScreen';
-import AVCScreen from './screens/AVCScreen';
-import MortgagesScreen from './screens/MortgagesScreen';
-import WillsScreen from './screens/WillsScreen';
-import ProtectionScreen from './screens/ProtectionScreen';
-import PayrollSavingsScreen from './screens/PayrollSavingsScreen';
-import { useEnabledFeatures } from './hooks/useEnabledFeatures';
-import { EnabledFeaturesProvider } from './contexts/EnabledFeaturesContext';
+import FinancialProductsScreen from './features/financial-products/screens/FinancialProductsScreen';
+import AVCScreen from './features/avc/screens/AVCScreen';
+import MortgagesScreen from './features/mortgages/screens/MortgagesScreen';
+import WillsScreen from './features/wills/screens/WillsScreen';
+import ProtectionScreen from './features/protection/screens/ProtectionScreen';
+import PayrollSavingsScreen from './features/payroll-savings/screens/PayrollSavingsScreen';
+import { useEnabledFeatures } from './shared/hooks/useEnabledFeatures';
+import { EnabledFeaturesProvider } from './shared/contexts/EnabledFeaturesContext';
 
 const Stack = createNativeStackNavigator();
 
