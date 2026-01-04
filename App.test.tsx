@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react-native';
 import App from './App';
-import { FINANCIAL_PRODUCTS } from './data/financial-products-data';
-import * as httpService from './Services/http';
-import { useEnabledFeatures } from './hooks/useEnabledFeatures';
-import { EnabledFeatures } from './Services/http';
+import { FINANCIAL_PRODUCTS } from './features/financial-products/data';
+import * as httpService from './shared/services/http';
+import { useEnabledFeatures } from './shared/hooks/useEnabledFeatures';
+import { EnabledFeatures } from './shared/types';
 
 // Mock the HTTP service
-jest.mock('./Services/http');
+jest.mock('./shared/services/http');
 
 // Mock the hook
-jest.mock('./hooks/useEnabledFeatures');
+jest.mock('./shared/hooks/useEnabledFeatures');
 
 describe('App', () => {
   const mockGetEnabledFeatures = httpService.getEnabledFeatures as jest.MockedFunction<typeof httpService.getEnabledFeatures>;
