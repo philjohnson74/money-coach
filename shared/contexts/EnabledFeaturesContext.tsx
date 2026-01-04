@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { EnabledFeatures, EnabledFeaturesContextType, EnabledFeaturesProviderProps } from '../types';
+import { EnabledFeaturesContextType, EnabledFeaturesProviderProps } from '../types';
 
 const EnabledFeaturesContext = createContext<EnabledFeaturesContextType | undefined>(undefined);
 
@@ -8,7 +8,7 @@ export function EnabledFeaturesProvider({
     enabledFeatures, 
     isLoading, 
     error 
-}: EnabledFeaturesProviderProps): React.ReactElement {
+}: Readonly<EnabledFeaturesProviderProps>): React.ReactElement {
     const contextValue = useMemo(
         () => ({ enabledFeatures, isLoading, error }),
         [enabledFeatures, isLoading, error]
